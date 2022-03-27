@@ -6,8 +6,8 @@ package giants;
  * 
  * @author Gray English
  * @author Ramon Meza
- * @version 1.0 3/6/2022
- * @since 1.0
+ * @version 1.1 3/26/2022
+ * @since 1.0 3/6/2022
  */
 
 public class Statistics {
@@ -15,8 +15,8 @@ public class Statistics {
 	/**
 	 * customers that were simulated
 	 * 
-	 * @version 1.0 3/6/2022
-	 * @since 1.0
+	 * @version 1.1 3/26/2022
+	 * @since 1.0 3/6/2022
 	 */
 	
 	private Customer custs[];
@@ -24,8 +24,8 @@ public class Statistics {
 	/**
 	 * aggregated time that each line was not queue with customers
 	 * 
-	 * @version 1.0 3/6/2022
-	 * @since 1.0
+	 * @version 1.1 3/26/2022
+	 * @since 1.0 3/6/2022
 	 */
 	
 	private int lineOpen[];
@@ -33,8 +33,8 @@ public class Statistics {
 	/**
 	 * elapsed total time simulated
 	 * 
-	 * @version 1.0 3/6/2022
-	 * @since 1.0
+	 * @version 1.1 3/26/2022
+	 * @since 1.0 3/6/2022
 	 */
 	
 	private int totalTime;
@@ -43,8 +43,8 @@ public class Statistics {
 	 * creates a Statistics object with customers, line open time, and total time 
 	 * from a simulation 
 	 * 
-	 * @version 1.0 3/6/2022
-	 * @since 1.0
+	 * @version 1.1 3/26/2022
+	 * @since 1.0 3/6/2022
 	 * @param custs			customers that were simulated
 	 * @param lineOpen		how long each line was not queued
 	 * @param totalTime		total time simulated
@@ -59,41 +59,47 @@ public class Statistics {
 	/**
 	 * prints statistics to console output
 	 * 
-	 * @version 1.0 3/6/2022
-	 * @since 1.0
+	 * @version 1.1 3/26/2022
+	 * @since 1.0 3/6/2022
 	 */
 	
 	public void printStatistics() {
-		System.out.println("The lines were open for " + totalTime 
+		customerDetails();
+		System.out.println("\nThe total time to process all customers was " + totalTime 
 				+ " minutes. \n");
 		laneUsage();
-		
 		sortCustomers();
 		averageWait();
 		satisfaction();
-		customerDetails();
 	}
 	
 	/**
 	 * prints usage of each lane to console output
 	 * 
-	 * @version 1.0 3/6/2022
-	 * @since 1.0
+	 * @version 1.1 3/26/2022
+	 * @since 1.0 3/6/2022
 	 */
 	
 	private void laneUsage() {
-		char[] lineName = {'A', 'B', 'C'};
+		char[] lineName = {'A', 'B', 'C', 'D', 'E'};
 		for (int i = 0; i < lineOpen.length; i++) {
+			//Separates full/self service lines
+			if (i == 0) {
+				System.out.println("Full Service Lines: ");
+			} else if (i == 3) {
+				System.out.println("\nSelf Service Lines: ");
+			}
 			System.out.println("Line " + lineName[i] + " was not used"
-					+ " for " + lineOpen[i] + " minutes. \n");
+					+ " for " + lineOpen[i] + " minutes.");
 		}
+		System.out.println("\n");
 	}
 	
 	/**
 	 * sorts customers by absolute arrival time
 	 * 
-	 * @version 1.0 3/6/2022
-	 * @since 1.0
+	 * @version 1.1 3/26/2022
+	 * @since 1.0 3/6/2022
 	 */
 	
 	private void sortCustomers() {
@@ -115,8 +121,8 @@ public class Statistics {
 	/**
 	 * prints average wait time of customers to console output
 	 * 
-	 * @version 1.0 3/6/2022
-	 * @since 1.0
+	 * @version 1.1 3/26/2022
+	 * @since 1.0 3/6/2022
 	 */
 	
 	private void averageWait() {
@@ -133,8 +139,8 @@ public class Statistics {
 	/**
 	 * prints number of satisfied and unsatisfied customers to console output
 	 * 
-	 * @version 1.0 3/6/2022
-	 * @since 1.0
+	 * @version 1.1 3/26/2022
+	 * @since 1.0 3/6/2022
 	 */
 	
 	private void satisfaction() {
@@ -152,8 +158,8 @@ public class Statistics {
 	/**
 	 * prints details of each customer simulated to console
 	 * 
-	 * @version 1.0 3/6/2022
-	 * @since 1.0
+	 * @version 1.1 3/26/2022
+	 * @since 1.0 3/6/2022
 	 */
 	
 	private void customerDetails() {

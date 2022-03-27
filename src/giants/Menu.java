@@ -8,8 +8,8 @@ import java.util.Scanner;
  * 			using the Simulator and then prints them as console output.
  * 
  * @author Gray English
- * @version 1.0 3/6/2022
- * @since 1.0
+ * @version 1.1 3/26/2022
+ * @since 1.0 3/6/2022
  */
 
 public class Menu {
@@ -17,8 +17,8 @@ public class Menu {
 	/**
 	 * Simulator object for simulating queues of customers
 	 * 
-	 * @version 1.0 3/6/2022
-	 * @since 1.0
+	 * @version 1.1 3/26/2022
+	 * @since 1.0 3/6/2022
 	 */
 	
 	private Simulator sim;
@@ -26,8 +26,8 @@ public class Menu {
 	/**
 	 * Statistics object for generating statistics
 	 *
-	 * @version 1.0 3/6/2022
-	 * @since 1.0
+	 * @version 1.1 3/26/2022
+	 * @since 1.0 3/6/2022
 	 */
 	private Statistics stats;
 	
@@ -35,8 +35,8 @@ public class Menu {
 	 * Gets and verifies user conditions. Then initializes a Simulator object
 	 * to produce a Statistics object. Prints statistics.
 	 * 
-	 * @version 1.0 3/6/2022
-	 * @since 1.0
+	 * @version 1.1 3/26/2022
+	 * @since 1.0 3/6/2022
 	 */
 	
 	public void setupSim() {
@@ -67,6 +67,12 @@ public class Menu {
 			maxServ = scan.nextInt();
 		} while (validTime(maxServ) == false);
 		
+		double selfPerc;
+		do {
+			System.out.println("Enter how much longer self service customers take as a percentage (0 to 300): ");
+			selfPerc = scan.nextInt();
+		} while (validPercent(selfPerc) == false);
+		
 		int custs;
 		do {
 			System.out.print("Enter the number of customers to be served: ");
@@ -75,7 +81,7 @@ public class Menu {
 		System.out.println();
 		
 		//create simulator
-		sim = new Simulator(minArr, maxArr, minServ, maxServ, custs);
+		sim = new Simulator(minArr, maxArr, minServ, maxServ, selfPerc, custs);
 		
 		//simulate to get statistics
 		stats = sim.simulate();
@@ -85,15 +91,33 @@ public class Menu {
 	/**
 	 * Verify that time entered as a condition as input is valid
 	 * 
-	 * @version 1.0 3/6/2022
-	 * @since 1.0
+	 * @version 1.1 3/26/2022
+	 * @since 1.0 3/6/2022
 	 * @param time		the time entered as a condition
 	 * @return		<code>true</code> if time is a valid number
 	 * 			<code>false</code> otherwise 
 	 */
 	private boolean validTime(int time) {
 		if (time <= 0) {
-			System.out.println("Invalid time. Must be greater than or equal to 0. \n");
+			System.out.println("Invalid time. Must be greater than or equal to 1. \n");
+			return false;
+		}
+		return true;
+	}
+	
+	/**
+	 * Verify that percent entered as a condition as input is valid
+	 * 
+	 * @version 1.1 3/26/2022
+	 * @since 1.1 3/26/2022
+	 * @param percent
+	 * @return		<code>true</code> if percent is a valid number
+	 * 			<code>false</code> otherwise
+	 */
+	
+	private boolean validPercent(double percent) {
+		if (percent < 0.0 || percent > 300.0) {
+			System.out.println("Invalid percentage. Must be between 0 and 100. \n");
 			return false;
 		}
 		return true;
@@ -102,8 +126,8 @@ public class Menu {
 	/**
 	 * Verify that number of customers entered as input is valid
 	 * 
-	 * @version 1.0 3/6/2022
-	 * @since 1.0
+	 * @version 1.1 3/26/2022
+	 * @since 1.0 3/6/2022
 	 * @param custs		number of customers
 	 * @return		<code>true</code> if custs is a valid number
 	 * 			<code>false</code> otherwise

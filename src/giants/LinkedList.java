@@ -1,20 +1,20 @@
 package giants;
 
 /**
- * QueueLL Class	Linked list objects for simulating queues.
+ * LinkedList Class		Linked list for queuing objects
  * 
  * @author Noah Mountcastle
- * @version 1.0 3/6/2022
- * @since 1.0
+ * @version 1.1 3/26/2022
+ * @since 1.0 3/6/2022
  */
 
-public class QueueLL {
+public class LinkedList {
 
 	/**
 	 * first Node in the linked list
 	 * 
-	 * @version 1.0 3/6/2022
-	 * @since 1.0
+	 * @version 1.1 3/26/2022
+	 * @since 1.0 3/6/2022
 	 */
 	
 	private Node first;
@@ -22,8 +22,8 @@ public class QueueLL {
 	/**
 	 * last Node in the linked list
 	 * 
-	 * @version 1.0 3/6/2022
-	 * @since 1.0
+	 * @version 1.1 3/26/2022
+	 * @since 1.0 3/6/2022
 	 */
 	
 	private Node last;
@@ -31,17 +31,17 @@ public class QueueLL {
 	/**
 	 * Node class		Creates Node objects for a linked list
 	 * 
-	 * @version 1.0 3/6/2022
-	 * @since 1.0
+	 * @version 1.1 3/26/2022
+	 * @since 1.0 3/6/2022
 	 */
 	
-	private class Node {
+	private static class Node {
 		
 		/**
 		 * Customer object in Node
 		 * 
-		 * @version 1.0 3/6/2022
-		 * @since 1.0
+		 * @version 1.1 3/26/2022
+		 * @since 1.0 3/6/2022
 		 */
 		
 		Customer cust;
@@ -49,8 +49,8 @@ public class QueueLL {
 		/**
 		 * points to next Node in list
 		 * 
-		 * @version 1.0 3/6/2022
-		 * @since 1.0
+		 * @version 1.1 3/26/2022
+		 * @since 1.0 3/6/2022
 		 */
 		
 		Node next;
@@ -58,8 +58,8 @@ public class QueueLL {
 		/**
 		 * points to previous Node in list
 		 * 
-		 * @version 1.0 3/6/2022
-		 * @since 1.0
+		 * @version 1.1 3/26/2022
+		 * @since 1.0 3/6/2022
 		 */
 		
 		Node prev;
@@ -67,9 +67,9 @@ public class QueueLL {
 		/**
 		 * creates Node objects
 		 * 
-		 * @version 1.0 3/6/2022
-		 * @since 1.0
-		 * @param cust		Customer object in Node
+		 * @version 1.1 3/26/2022
+		 * @since 1.0 3/6/2022
+		 * @param object		object in Node
 		 * @param next		next Node
 		 * @param prev		previous Node
 		 */
@@ -85,11 +85,11 @@ public class QueueLL {
 	/**
 	 * initializes an empty linked list
 	 * 
-	 * @version 1.0 3/6/2022
-	 * @since 1.0
+	 * @version 1.1 3/26/2022
+	 * @since 1.0 3/6/2022
 	 */
 	
-	public QueueLL() {
+	public LinkedList() {
 		first = null;
 		last = null;
 	}
@@ -97,8 +97,8 @@ public class QueueLL {
 	/**
 	 * returns if linked list is empty
 	 * 
-	 * @version 1.0 3/6/2022
-	 * @since 1.0
+	 * @version 1.1 3/26/2022
+	 * @since 1.0 3/6/2022
 	 * @return	<code>true</code> linked list is empty
 	 * 		<code>false</code> otherwise
 	 */
@@ -110,8 +110,8 @@ public class QueueLL {
 	/**
 	 * returns how many Nodes are in linked list
 	 * 
-	 * @version 1.0 3/6/2022
-	 * @since 1.0
+	 * @version 1.1 3/26/2022
+	 * @since 1.0 3/6/2022
 	 * @return		size of linked list
 	 */
 	
@@ -128,9 +128,9 @@ public class QueueLL {
 	/**
 	 * adds a customer to the linked list
 	 * 
-	 * @version 1.0 3/6/2022
-	 * @since 1.0
-	 * @param cust		customer to be added
+	 * @version 1.1 3/26/2022
+	 * @since 1.0 3/6/2022
+	 * @param cust	customer to be added
 	 */
 	
 	public void add(Customer cust) {
@@ -146,8 +146,8 @@ public class QueueLL {
 	/**
 	 * removes and returns the first customer in the linked list
 	 * 
-	 * @version 1.0 3/6/2022
-	 * @since 1.0
+	 * @version 1.1 3/26/2022
+	 * @since 1.0 3/6/2022
 	 * @return		customer that was removed
 	 */
 	
@@ -161,27 +161,27 @@ public class QueueLL {
 	}
 	
 	/**
-	 * returns the finish time of the first customer in the linked list
+	 * returns first object in the linked list
 	 * 
-	 * @version 1.0 3/6/2022
-	 * @since 1.0
-	 * @return		first customer finish time
+	 * @version 1.1 3/26/2022
+	 * @since 1.0 3/6/2022
+	 * @return		first object
 	 */
 	
-	public int frontPeak() {
-		return first.cust.getFinish();
+	public Customer frontPeek() {
+		return first.cust;
 	}
 	
 	/**
-	 * returns the finish time of the last customer in the linked list
+	 * returns last object in the linked list
 	 * 
-	 * @version 1.0 3/6/2022
-	 * @since 1.0
-	 * @return		last customer finish time
+	 * @version 1.1 3/26/2022
+	 * @since 1.0 3/6/2022
+	 * @return		last object
 	 */
 	
-	public int rearPeak() {
-		return last.cust.getFinish();
+	public Customer rearPeek() {
+		return last.cust;
 	}
 	
 }

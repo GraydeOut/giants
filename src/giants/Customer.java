@@ -2,11 +2,11 @@ package giants;
 
 /**
  * Customer Class	Used to create Customer objects. Objects simulate customer
- * 			queues times.
+ * 					queues times.
  * 
  * @author Noah Mountcastle
- * @version 1.0 3/6/2022
- * @since 1.0
+ * @version 1.1 3/26/2022
+ * @since 1.0 3/6/2022
  */
 
 public class Customer {
@@ -14,8 +14,8 @@ public class Customer {
 	/**
 	 * arrival time of customer
 	 * 
-	 * @version 1.0 3/6/2022
-	 * @since 1.0
+	 * @version 1.1 3/26/2022
+	 * @since 1.0 3/6/2022
 	 */
 	
 	private int arrival;
@@ -23,8 +23,8 @@ public class Customer {
 	/**
 	 * time it takes customer to be serviced
 	 * 
-	 * @version 1.0 3/6/2022
-	 * @since 1.0
+	 * @version 1.1 3/26/2022
+	 * @since 1.0 3/6/2022
 	 */
 	
 	private int servTime;
@@ -32,8 +32,8 @@ public class Customer {
 	/**
 	 * finish time of customer
 	 * 
-	 * @version 1.0 3/6/2022
-	 * @since 1.0
+	 * @version 1.1 3/26/2022
+	 * @since 1.0 3/6/2022
 	 */
 	
 	private int finish;
@@ -41,31 +41,41 @@ public class Customer {
 	/**
 	 * line number customer is in
 	 * 
-	 * @version 1.0 3/6/2022
-	 * @since 1.0
+	 * @version 1.1 3/26/2022
+	 * @since 1.0 3/6/2022
 	 */
 	
 	private int line;
 	
 	/**
+	 * whether customer used self checkout
+	 * 
+	 * @version 1.1 3/26/2022
+	 * @since 1.1 3/26/2022
+	 */
+	
+	private boolean selfCheckout; 
+	
+	/**
 	 * creates and initializes a Customer object
 	 * 
-	 * @version 1.0 3/6/2022
-	 * @since 1.0
+	 * @version 1.1 3/26/2022
+	 * @since 1.0 3/6/2022
 	 * @param arrival	arrival time of customer
 	 * @param servTime	service time of customer
 	 */
 	
-	public Customer(int arrival, int servTime) {
+	public Customer(int arrival, int servTime, boolean selfCheckout) {
 		this.arrival = arrival;
 		this.servTime = servTime;
+		this.selfCheckout = selfCheckout;
 	}
 	
 	/**
 	 * used to get a String representation of a Customer
 	 * 
-	 * @version 1.0 3/6/2022
-	 * @since 1.0
+	 * @version 1.1 3/26/2022
+	 * @since 1.0 3/6/2022
 	 * @see String Class
 	 * @return 	string representation of customer
 	 */
@@ -82,6 +92,12 @@ public class Customer {
 			case 2:
 				lineName = 'C';
 				break;
+			case 3:
+				lineName = 'D';
+				break;
+			case 4:
+				lineName = 'E';
+				break;
 			default:
 				System.out.println("Invalid line.");
 				break;
@@ -95,8 +111,8 @@ public class Customer {
 	 * calculates the customer wait time between arrival and start of 
 	 * service
 	 * 
-	 * @version 1.0 3/6/2022
-	 * @since 1.0
+	 * @version 1.1 3/26/2022
+	 * @since 1.0 3/6/2022
 	 * @return	wait time of customer
 	 */
 	
@@ -107,8 +123,8 @@ public class Customer {
 	/**
 	 * returns arrival time of customer
 	 * 
-	 * @version 1.0 3/6/2022
-	 * @since 1.0
+	 * @version 1.1 3/26/2022
+	 * @since 1.0 3/6/2022
 	 * @return	arrival time
 	 */
 	
@@ -119,8 +135,8 @@ public class Customer {
 	/**
 	 * sets arrival time of customer
 	 * 
-	 * @version 1.0 3/6/2022
-	 * @since 1.0
+	 * @version 1.1 3/26/2022
+	 * @since 1.0 3/6/2022
 	 * @param arrival	sets arrival time
 	 */
 	
@@ -131,8 +147,8 @@ public class Customer {
 	/**
 	 * returns service time of customer
 	 * 
-	 * @version 1.0 3/6/2022
-	 * @since 1.0
+	 * @version 1.1 3/26/2022
+	 * @since 1.0 3/6/2022
 	 * @return	service time
 	 */
 	
@@ -143,8 +159,8 @@ public class Customer {
 	/**
 	 * sets service time of customer
 	 * 
-	 * @version 1.0 3/6/2022
-	 * @since 1.0
+	 * @version 1.1 3/26/2022
+	 * @since 1.0 3/6/2022
 	 * @param begin		service time
 	 */
 	
@@ -155,8 +171,8 @@ public class Customer {
 	/**
 	 * gets finish time of customer
 	 * 
-	 * @version 1.0 3/6/2022
-	 * @since 1.0
+	 * @version 1.1 3/26/2022
+	 * @since 1.0 3/6/2022
 	 * @return	finish time
 	 */
 	
@@ -167,20 +183,20 @@ public class Customer {
 	/**
 	 * sets finish time of customer
 	 * 
-	 * @version 1.0 3/6/2022
-	 * @since 1.0
+	 * @version 1.1 3/26/2022
+	 * @since 1.0 3/6/2022
 	 * @param finish	finish time
 	 */
 	
 	public void setFinish(int finish) {
-		this.finish = finish;
+		this.finish = finish + servTime;
 	}
 	
 	/**
 	 * get queue line number of customer
 	 * 
-	 * @version 1.0 3/6/2022
-	 * @since 1.0 
+	 * @version 1.1 3/26/2022
+	 * @since 1.0 3/6/2022
 	 * @return	queue line number
 	 */
 	
@@ -191,13 +207,26 @@ public class Customer {
 	/**
 	 * set queue line number of customer
 	 * 
-	 * @version 1.0 3/6/2022
-	 * @since 1.0
+	 * @version 1.1 3/26/2022
+	 * @since 1.0 3/6/2022
 	 * @param line		queue line number
 	 */
 	
 	public void setLine(int line) {
 		this.line = line;
+	}
+	
+	/**
+	 * returns if customer used self checkout line
+	 * 
+	 * @version 1.1 3/26/2022
+	 * @since 1.1 3/26/2022
+	 * @return	<code>true</code> customer used self checkout
+	 * 		<code>false</code> otherwise
+	 */
+	
+	public boolean getSelfCheckout() {
+		return selfCheckout;
 	}
 
 }
