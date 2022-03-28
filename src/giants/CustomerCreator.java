@@ -79,7 +79,7 @@ public class CustomerCreator {
 	
 	public Customer nextCustomer() {
 		//Sets service and arrival times
-		int arrival = (int) (Math.random() * (maxArrival - minService + 1)) 
+		int arrival = (int) (Math.random() * (maxArrival - minArrival + 1)) 
 				+ minArrival;
 		int service = (int) (Math.random() * (maxService - minService + 1))
 				+ minService;
