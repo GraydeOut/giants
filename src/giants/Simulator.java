@@ -86,40 +86,38 @@ public class Simulator {
 	Queue selfQueue;
 	
 	/**
-	 * initializes a Simulator object using arrival, service times, self service
-	 * percentage modifier and number of customers to be simulated.
+	 * initializes a Simulator object using a CustomerCreator, number of full and self service lines,
+	 * and amount of customers to be simulated.
 	 * 
 	 * @version 1.1 3/26/2022
 	 * @since 1.0 3/6/2022
-	 * @param minArr	minimum interarrival time
-	 * @param maxArr	maximum interarrival time
-	 * @param minSer	minimum service time
-	 * @param maxSer	maximum service time
-	 * @param selfPerc	percentage modifier for self service
-	 * @param custs		number of customers
+	 * @param creator			Customer creator object
+	 * @param fullService		number of self service lines
+	 * @param selfService		number of full service lines
+	 * @param custs				number of customers
 	 */
 	
-	public Simulator(int minArr, int maxArr, int minSer, int maxSer, double selfPerc, int custs) {
+	public Simulator(CustomerCreator creator, int fullService, int selfService, int custs) {
 		//initialize fields
 		numCusts = custs;
 		customers = new Customer[numCusts];
 		currentTime = 0;
 		
 		//initialize creator
-		creator = new CustomerCreator(minArr, maxArr, minSer, maxSer, selfPerc);
+		this.creator = creator;
 		
 		//initialize checkouts
-		fullCheck = new Checkout[3];
+		fullCheck = new Checkout[fullService];
 		for(int i = 0; i < fullCheck.length; i++) {
 			fullCheck[i] = new Checkout();
 		}
-		selfCheck = new Checkout[2];
+		selfCheck = new Checkout[selfService];
 		for(int i = 0; i < selfCheck.length; i++) {
 			selfCheck[i] = new Checkout();
 		}
 		
 		//initializes queues
-		fullQueue = new Queue[3];
+		fullQueue = new Queue[fullService];
 		for (int i = 0; i < fullQueue.length; i++) {
 			fullQueue[i] = new Queue();
 		}
@@ -191,7 +189,7 @@ public class Simulator {
 					} else {
 						Customer cust = selfQueue.dequeue();
 						cust.setFinish(currentTime);
-						cust.setLine(i + 3);
+						cust.setLine(i + fullCheck.length);
 						selfCheck[i].newCustomer(cust);
 					}
 				}
@@ -203,18 +201,18 @@ public class Simulator {
 		}
 		
 		//gets wait time for each checkout
-		int waitTime[] = new int[5];
+		int waitTime[] = new int[fullCheck.length + selfCheck.length];
 		for (int i = 0; i < fullCheck.length; i++) {
 			waitTime[i] = fullCheck[i].getWaitTime();
 		}
 		
 		for (int i = 0; i < selfCheck.length; i++) {
-			waitTime[i + 3] = selfCheck[i].getWaitTime();
+			waitTime[i + fullCheck.length] = selfCheck[i].getWaitTime();
 		}
 		
 		//returns Statistics object
 		currentTime--;
-		Statistics stats = new Statistics(customers, waitTime, currentTime);
+		Statistics stats = new Statistics(customers, fullCheck.length, selfCheck.length, waitTime, currentTime);
 		return stats;
 	}
 	

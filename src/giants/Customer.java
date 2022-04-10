@@ -81,29 +81,8 @@ public class Customer {
 	 */
 	
 	public String toString() {
-		char lineName = ' ';
-		switch (line) {
-			case 0:
-				lineName = 'A';
-				break;
-			case 1:
-				lineName = 'B';
-				break;
-			case 2:
-				lineName = 'C';
-				break;
-			case 3:
-				lineName = 'D';
-				break;
-			case 4:
-				lineName = 'E';
-				break;
-			default:
-				System.out.println("Invalid line.");
-				break;
-		}
-		
-		return "Served by line " + lineName + " Arrival time: " + arrival 
+		int lineNum = line + 1;
+		return "Served by line " + lineNum + " Arrival time: " + arrival 
 				+ " Service time: " + servTime + " Departure time : " + finish ;
 	}
 	

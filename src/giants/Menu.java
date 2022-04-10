@@ -42,7 +42,7 @@ public class Menu {
 	public void setupSim() {
 		Scanner scan = new Scanner(System.in);
 		
-		//Get user options
+		//Get arrival and service time options
 		int minArr;
 		do {
 			System.out.print("Enter minimum interarrival time: ");
@@ -73,6 +73,34 @@ public class Menu {
 			selfPerc = scan.nextInt();
 		} while (validPercent(selfPerc) == false);
 		
+		//Gets number of self and full service lines
+		int fullLines;
+		int selfLines;
+		do {
+			do {
+				System.out.print("Enter number of full service lines: ");
+				fullLines = scan.nextInt();
+			} while (validLines(fullLines) == false);
+			
+			do {
+				System.out.print("Enter number of self service lines: ");
+				selfLines = scan.nextInt();
+			} while (validLines(selfLines) == false);
+		} while (validLineCount(fullLines + selfLines) == false);
+		
+		boolean fullServ = false;
+		boolean selfServ = false;
+		
+		if (fullLines > 0) {
+			fullServ = true;
+		}
+		
+		if (selfLines > 0) {
+			selfServ = true;
+		}
+		
+		CustomerCreator creator = new CustomerCreator(minArr, maxArr, minServ, maxServ, fullServ, selfServ, selfPerc);
+		
 		int custs;
 		do {
 			System.out.print("Enter the number of customers to be served: ");
@@ -81,7 +109,7 @@ public class Menu {
 		System.out.println();
 		
 		//create simulator
-		sim = new Simulator(minArr, maxArr, minServ, maxServ, selfPerc, custs);
+		sim = new Simulator(creator, fullLines, selfLines, custs);
 		
 		//simulate to get statistics
 		stats = sim.simulate();
@@ -118,6 +146,40 @@ public class Menu {
 	private boolean validPercent(double percent) {
 		if (percent < 0.0 || percent > 300.0) {
 			System.out.println("Invalid percentage. Must be between 0 and 100. \n");
+			return false;
+		}
+		return true;
+	}
+	
+	/**
+	 * Verify that number of lines entered as a condition as input is valid
+	 * 
+	 * @version 1.1 3/26/2022
+	 * @since 1.2 4/9/2022
+	 * @param lines		the number of line entered as a condition
+	 * @return		<code>true</code> if number of lines is a valid
+	 * 			<code>false</code> otherwise 
+	 */
+	private boolean validLines(int lines) {
+		if (lines < 0) {
+			System.out.println("Invalid number of lines. Must be greater than or equal to 0. \n");
+			return false;
+		}
+		return true;
+	}
+	
+	/**
+	 * Verify that time entered as a condition as input is valid
+	 * 
+	 * @version 1.1 3/26/2022
+	 * @since 1.0 3/6/2022
+	 * @param numLines		the time entered as a condition
+	 * @return		<code>true</code> if total number of lines is a valid number
+	 * 			<code>false</code> otherwise 
+	 */
+	private boolean validLineCount(int numLines) {
+		if (numLines <= 0) {
+			System.out.println("Invalid number of lines. There must be at least one line. \n");
 			return false;
 		}
 		return true;

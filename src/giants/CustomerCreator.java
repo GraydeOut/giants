@@ -47,6 +47,33 @@ public class CustomerCreator {
 	
 	private int maxService;
 	
+	/**
+	 * <code>true</code> full service lines exist
+	 * <code>false</code> otherwise
+	 * 
+	 * @version 1.1 3/26/2022
+	 * @since 1.2 4/9/2022
+	 */
+	
+	private boolean fullLine;
+	
+	/**
+	 * <code>true</code> self service lines exist
+	 * <code>false</code> otherwise
+	 * 
+	 * @version 1.1 3/26/2022
+	 * @since 1.2 4/9/2022
+	 */
+	
+	private boolean selfLine;
+	
+	/**
+	 * percentage modifier determining how much long self service line service times are
+	 * 
+	 * @version 1.1 3/26/2022
+	 * @since 1.1 3/26/2022
+	 */
+	
 	private double selfModifier;
 	
 	/**
@@ -55,17 +82,22 @@ public class CustomerCreator {
 	 * 
 	 * @version 1.1 3/26/2022
 	 * @since 1.0 3/6/2022
-	 * @param minArr	minimum arrival time
-	 * @param maxArr	maximum arrival time
-	 * @param minSer	minimum service time
-	 * @param maxSer	maximum service time
+	 * @param minArr		minimum arrival time
+	 * @param maxArr		maximum arrival time
+	 * @param minSer		minimum service time
+	 * @param maxSer		maximum service time
+	 * @param fullLine		full service lines exist
+	 * @param selfLine		self service lines exist
+	 * @param SelfMod		self service modifier
 	 */
 	
-	public CustomerCreator(int minArr, int maxArr, int minSer, int maxSer, double selfMod) {
+	public CustomerCreator(int minArr, int maxArr, int minSer, int maxSer,boolean fullLine, boolean selfLine, double selfMod) {
 		minArrival = minArr;
 		maxArrival = maxArr;
 		minService = minSer;
 		maxService = maxSer;
+		this.fullLine = fullLine;
+		this.selfLine = selfLine;
 		selfModifier = (100.00 + selfMod) / 100;
 	}
 	
@@ -85,14 +117,19 @@ public class CustomerCreator {
 				+ minService;
 		
 		//Determine if customer is self service and modify's service time if so
-		int coinFlip = (int) (Math.random() * 2) + 1;
-		boolean selfCheckout;
-		if (coinFlip == 1) {
+		boolean selfCheckout = false;
+		
+		if (selfLine == true && fullLine == true ) {
+			int coinFlip = (int) (Math.random() * 2) + 1;
+			if (coinFlip == 1) {
+				service *= selfModifier;
+				selfCheckout = true;
+			}
+		} else if (selfLine == true) {
 			service *= selfModifier;
 			selfCheckout = true;
-		} else {
-			selfCheckout = false;
 		}
+		
 		return new Customer(arrival, service, selfCheckout);
 	}
 	

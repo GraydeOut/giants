@@ -22,6 +22,24 @@ public class Statistics {
 	private Customer custs[];
 	
 	/**
+	 * number of full service checkouts
+	 * 
+	 * @version 1.1 3/26/2022
+	 * @since 1.2 4/9/2022
+	 */
+	
+	private int fullCheck;
+	
+	/**
+	 * number of self service checkouts
+	 * 
+	 * @version 1.1 3/26/2022
+	 * @since 1.2 4/9/2022
+	 */
+	
+	private int selfCheck;
+	
+	/**
 	 * aggregated time that each line was not queue with customers
 	 * 
 	 * @version 1.1 3/26/2022
@@ -50,8 +68,10 @@ public class Statistics {
 	 * @param totalTime		total time simulated
 	 */
 	
-	Statistics(Customer custs[], int lineOpen[], int totalTime) {
+	Statistics(Customer custs[], int fullCheck, int selfCheck, int lineOpen[], int totalTime) {
 		this.custs = custs;
+		this.fullCheck = fullCheck;
+		this.selfCheck = selfCheck;
 		this.lineOpen = lineOpen;
 		this.totalTime = totalTime;
 	}
@@ -81,15 +101,17 @@ public class Statistics {
 	 */
 	
 	private void laneUsage() {
-		char[] lineName = {'A', 'B', 'C', 'D', 'E'};
+		if (fullCheck > 0) {
+			System.out.println("Full Service Lines: ");
+		}
+		
 		for (int i = 0; i < lineOpen.length; i++) {
 			//Separates full/self service lines
-			if (i == 0) {
-				System.out.println("Full Service Lines: ");
-			} else if (i == 3) {
+			if (i == fullCheck) {
 				System.out.println("\nSelf Service Lines: ");
 			}
-			System.out.println("Line " + lineName[i] + " was not used"
+			int lineNum = i + 1;
+			System.out.println("Line " + lineNum + " was not used"
 					+ " for " + lineOpen[i] + " minutes.");
 		}
 		System.out.println("\n");

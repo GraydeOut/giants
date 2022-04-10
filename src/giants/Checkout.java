@@ -49,7 +49,9 @@ public class Checkout {
 	
 	public int getFinishTime(int currentTime) {
 		if(cust == null) {
+			if (currentTime != 0) {
 			waitTime++;
+			}
 			return currentTime;
 		}
 		return cust.getFinish();
