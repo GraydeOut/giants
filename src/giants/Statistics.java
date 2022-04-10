@@ -84,13 +84,25 @@ public class Statistics {
 	 */
 	
 	public void printStatistics() {
+		int lineChanges = 0;
+		
 		customerDetails();
 		System.out.println("\nThe total time to process all customers was " + totalTime 
 				+ " minutes. \n");
-		laneUsage();
+		
+		lineChanges += laneUsage();
 		sortCustomers();
-		averageWait();
-		satisfaction();
+		lineChanges += averageWait();
+		lineChanges += satisfaction();
+		
+		if (lineChanges > 0) {
+			System.out.println("You should consider adding " + lineChanges + " service lines.");
+		} else if (lineChanges < 0) {
+			lineChanges *= -1;
+			System.out.println("You should consider removing " + lineChanges + " service lines.");
+		} else {
+			System.out.println("The number of service lines look about right.");
+		}
 	}
 	
 	/**
@@ -100,21 +112,26 @@ public class Statistics {
 	 * @since 1.0 3/6/2022
 	 */
 	
-	private void laneUsage() {
+	private int laneUsage() {
+		int lineChanges = 0;
 		if (fullCheck > 0) {
 			System.out.println("Full Service Lines: ");
 		}
 		
+		//prints time each lane was open
 		for (int i = 0; i < lineOpen.length; i++) {
 			//Separates full/self service lines
 			if (i == fullCheck) {
 				System.out.println("\nSelf Service Lines: ");
 			}
 			int lineNum = i + 1;
-			System.out.println("Line " + lineNum + " was not used"
-					+ " for " + lineOpen[i] + " minutes.");
+			System.out.println("Line " + lineNum + " was open for "
+					+ lineOpen[i] + " minutes.");
+			
+			lineChanges = lineOpen[i] / totalTime;
 		}
 		System.out.println("\n");
+		return lineChanges;
 	}
 	
 	/**
@@ -147,7 +164,7 @@ public class Statistics {
 	 * @since 1.0 3/6/2022
 	 */
 	
-	private void averageWait() {
+	private int averageWait() {
 		int wait = 0;
 		for (int i = 0; i < custs.length; i++) {
 			wait += custs[i].waitTime();
@@ -156,6 +173,12 @@ public class Statistics {
 		wait /= custs.length;
 		System.out.println("The average wait time for customers was " 
 				+ wait + " minutes. \n");
+		
+		if (wait == 0) {
+			return -1;
+		} else {
+			return wait / 30;
+		}
 	}
 	
 	/**
@@ -165,7 +188,8 @@ public class Statistics {
 	 * @since 1.0 3/6/2022
 	 */
 	
-	private void satisfaction() {
+	private int satisfaction() {
+		//gets number of satisfied and unsatisfied customers
 		int satisfied = 0;
 		for (int i = 0; i < custs.length; i++) {
 			if (custs[i].waitTime() < 5) {
@@ -175,6 +199,13 @@ public class Statistics {
 		int unsatisfied = custs.length - satisfied;
 		System.out.println(satisfied + " customers were satisfied. " + unsatisfied 
 				+ " customers waited 5 minutes or longer and were unsatified. \n ");
+		
+		//returns number of lines to add or subtracts based on customer satisfaction
+		if (unsatisfied == 0) {
+			return -1;
+		} else {
+			return unsatisfied / satisfied;
+		}
 	}
 	
 	/**
